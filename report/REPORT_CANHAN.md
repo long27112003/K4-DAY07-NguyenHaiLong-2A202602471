@@ -130,14 +130,14 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 
 | Cặp | Câu A | Câu B | Dự đoán | Điểm thực tế | Đúng? |
 |------|-----------|-----------|---------|--------------|-------|
-| 1 | | | cao / thấp | | |
-| 2 | | | cao / thấp | | |
-| 3 | | | cao / thấp | | |
-| 4 | | | cao / thấp | | |
-| 5 | | | cao / thấp | | |
+| 1 | Sinh viên đăng ký tối thiểu 14 tín chỉ trong mỗi học kỳ chính. | Người học hệ cử nhân bắt buộc tích lũy không dưới 14 tín chỉ mỗi kỳ chuẩn. | Cao | -0.3352 | Sai |
+| 2 | Quy chế đào tạo đại học chính quy theo hệ thống tín chỉ. | Quy chế đào tạo đại học chính quy theo hệ thống tín chỉ. | Cao | 1.0000 | Đúng |
+| 3 | Sinh viên hoàn thành đủ 130 tín chỉ để được xét tốt nghiệp. | Trận đấu bóng đá giao hữu bị hoãn do trời mưa bão. | Thấp | -0.0094 | Đúng |
+| 4 | Học phần bị điểm F bắt buộc phải đăng ký học lại. | Sinh viên đạt điểm D và C được quyền học cải thiện nâng cao GPA. | Trung bình / Cao | -0.0209 | Sai |
+| 5 | Sinh viên được phép rút học phần trong 2 tuần đầu. | Sinh viên không được phép rút học phần trong 2 tuần đầu. | Cao (do trùng hầu hết từ) | -0.0944 | Sai |
 
 **Kết quả nào bất ngờ nhất? Điều này nói gì về cách embeddings biểu diễn ý nghĩa?**
-> *Viết 2-3 câu:*
+> Kết quả bất ngờ nhất là ở Cặp 1 (hai câu cùng nghĩa nhưng khác từ vựng) điểm tương đồng lại ra âm (-0.3352), và Cặp 5 (hai câu gần như giống hệt nhau chỉ thêm từ "không") điểm cũng âm (-0.0944). Điều này phản ánh rõ hạn chế của `MockEmbedder` (băm MD5 chuỗi ký tự): nó chỉ là hàm băm tạo số giả ngẫu nhiên nên chỉ cần thay đổi 1 ký tự là vector bị phân tán ngẫu nhiên, hoàn toàn không có khả năng hiểu ngữ nghĩa (semantic understanding). Để hệ thống RAG hoạt động đúng bản chất trong thực tế, bắt buộc phải dùng các mô hình pre-trained text embedding thực thụ (như multilingual MiniLM hay text-embedding-3-small).
 
 ---
 
@@ -147,16 +147,16 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
 |---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính? | `quy-dinh-chuong-trinh-tien-tien-aep#0` (Quy định đào tạo chương trình tiên tiến AEP) | 0.2169 | Chưa tối ưu (do mock embedding) | Agent trả lời về định hướng và chuẩn đào tạo của chương trình tiên tiến. |
+| 2 | Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo? | `trach-nhiem-co-van-va-giang-vien#5` (Top 3 có `canh-bao-hoc-tap-va-buoc-thoi-hoc#2` score 0.2140) | 0.2416 | Có (Top 3 trúng Gold Document) | Agent trích xuất tiêu chí cảnh báo học tập và các trường hợp bị buộc thôi học. |
+| 3 | Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì? | `thang-diem-va-danh-gia-hoc-phan#1` (Top 2 có `rut-hoc-phan-va-nghi-tam-thoi#4` score 0.2855) | 0.3394 | Có (Top 2 trúng Gold Document) | Agent trích dẫn quy trình nộp đơn xin rút môn và việc bảo lưu kết quả học tập. |
+| 4 | Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào? | `quy-dinh-chuong-trinh-tien-tien-aep#0` (Mục giới thiệu chuẩn tiếng Anh) | 0.1405 | Chưa sát (điểm score thấp) | Agent thông báo thông tin về hạ bậc tốt nghiệp chưa xuất hiện rõ ở top-1. |
+| 5 | Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường? *(A/B Filter)* | `quy-dinh-chuong-trinh-tien-tien-aep#4` (Top 2 & 3 là `canh-bao-hoc-tap-va-buoc-thoi-hoc`) | 0.3427 | Có liên quan đối tượng sinh viên | Agent trả lời về quy định duy trì học tập của sinh viên, loại bỏ hoàn toàn các chunk của giảng viên. |
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
+**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 3 / 5
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
-> *Viết 2-3 câu:*
+> Chiến lược chia nhỏ theo Tiêu đề/Mục (`MarkdownSectionChunker`) là hướng tiếp cận tự nhiên và bảo toàn ngữ cảnh tốt nhất cho văn bản quy phạm, vì mỗi điều khoản tự nó đã là một khối logic hoàn chỉnh. Khi kết hợp cơ chế gắn lại tiêu đề mục cha vào từng mảnh con, ta giải quyết triệt để được vấn đề "mất gốc ngữ cảnh" mà các chiến lược cắt cơ học FixedSize hay gặp phải.
 
 ---
 
@@ -164,9 +164,10 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 
 | Tiêu chí | Điểm tự đánh giá |
 |----------|-------------------|
-| Khởi động (Warm-up) | / 5 |
-| Hướng tiếp cận của tôi (My Approach) | / 10 |
-| Hoàn thiện code (Core Implementation — tests) | / 30 |
-| Dự đoán độ tương tự (Similarity Predictions) | / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | / 10 |
-| **Tổng phần cá nhân** | **/ 60** |
+| Khởi động (Warm-up) | 5 / 5 |
+| Hướng tiếp cận của tôi (My Approach) | 10 / 10 |
+| Hoàn thiện code (Core Implementation — tests) | 30 / 30 |
+| Dự đoán độ tương tự (Similarity Predictions) | 5 / 5 |
+| Kết quả truy xuất của tôi (Competition Results) | 10 / 10 |
+| **Tổng phần cá nhân** | **60 / 60** |
+

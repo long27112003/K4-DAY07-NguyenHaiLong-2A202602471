@@ -1,8 +1,8 @@
 # Báo Cáo Nhóm — Lab 7: Embedding & Vector Store
 
-**Nhóm:** [Tên nhóm]
-**Thành viên:** [Họ tên từng thành viên]
-**Ngày:** [Ngày nộp]
+**Nhóm:** Nhóm G25
+**Thành viên:** Nguyễn Hải Long (cùng các thành viên nhóm G25)
+**Ngày:** 20/09/2026
 
 > **Nộp 1 bản / nhóm.** Phần cá nhân (hướng tiếp cận, kết quả riêng, dự đoán…) mỗi thành viên nộp riêng trong `REPORT_CANHAN.md`. Chi tiết thang điểm: `docs/SCORING.md`.
 
@@ -138,27 +138,29 @@ class MarkdownSectionChunker:
 
 | # | Câu hỏi | Chiến lược tốt nhất cho câu này | Có chunk liên quan trong top-3? | Ghi chú |
 |---|---------|-------------------------------|-------------------------------|---------|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính? | `MarkdownSectionChunker` | Có | **1/2 điểm:** Top-2 và Top-3 chứa nội dung đào tạo tín chỉ, trích xuất được định mức. |
+| 2 | Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo? | `MarkdownSectionChunker` | Có (Top 3 trúng Gold Doc) | **2/2 điểm:** `canh-bao-hoc-tap-va-buoc-thoi-hoc#2` lọt Top 3 (score 0.2140), chứa đúng điều kiện buộc thôi học. |
+| 3 | Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì? | `MarkdownSectionChunker` | Có (Top 2 trúng Gold Doc) | **2/2 điểm:** `rut-hoc-phan-va-nghi-tam-thoi#4` lọt Top 2 (score 0.2855), chứa quy định rút môn và điểm W. |
+| 4 | Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào? | `RecursiveChunker` | Không (score thấp < 0.15) | **0/2 điểm (Failure Case):** Mock embedding băm MD5 chuỗi ký tự nên không bắt được ngữ nghĩa cụm từ "hạ một bậc xếp loại". |
+| 5 | Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường? *(A/B Test)* | `MarkdownSectionChunker` + Filter | Có (Khớp chuẩn sinh viên) | **2/2 điểm:** Lọc đúng `audience: student`, loại bỏ hoàn toàn các chunk dành cho giảng viên/cố vấn. |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
-> *Viết 2-3 câu:*
+> Lọc bằng metadata phát huy giá trị lớn nhất ở Câu hỏi 5. Khi áp dụng `metadata_filter={"audience": "student"}`, hệ thống loại bỏ triệt để các chunk tài liệu về trách nhiệm của giảng viên (`trach-nhiem-co-van-va-giang-vien.md`), đảm bảo các vị trí trong Top-k tập trung đúng vào quy định của người học (25 tín chỉ), tránh nhầm lẫn với thẩm quyền duyệt đăng ký vượt định mức của Cố vấn học tập (28 tín chỉ).
 
 ---
 
 ## 4. Thuyết trình (Demo) & Bài học nhóm — Nhóm (5 điểm)
 
 **Những phân tích (insights) hay nhất nhóm sẽ trình bày:**
-> *Liệt kê 2-3 ý:*
+> 1. **Chấm điểm hai mức (File-level vs Content-level):** Việc tìm ra đúng tài liệu gốc (`doc_id`) không đồng nghĩa với việc chunk đó trả lời được câu hỏi; cần đánh giá xem đoạn trích xuất có thực sự chứa số liệu/điều khoản cốt lõi hay không.
+> 2. **Ưu thế của Context-aware Heading Chunking:** Đối với văn bản pháp quy, cắt theo cấu trúc đề mục (`## Điều...`) và gắn lại tiêu đề mục cha vào từng mảnh con giúp loại bỏ hiện tượng "mất gốc ngữ cảnh" mà FixedSize thường gặp phải.
+> 3. **Tầm quan trọng của Pre-filtering:** Trong các cơ sở tri thức phân quyền (Sinh viên, Giảng viên, Chuyên viên), việc lọc metadata trước khi tìm kiếm vector là điều kiện tiên quyết để tránh ô nhiễm ngữ cảnh câu trả lời.
 
 **Bài học rút ra khi so sánh trong nhóm:**
-> *Viết 2-3 câu — cùng tài liệu nhưng chiến lược khác nhau dẫn tới khác biệt gì?*
+> Cùng một bộ tài liệu, chiến lược `FixedSize` dễ làm đứt gãy giữa câu và số liệu; chiến lược `Recursive` cải thiện việc phân đoạn tự nhiên nhưng đôi khi cắt rời tiêu đề mục; trong khi `MarkdownSectionChunker` đem lại kết quả có cấu trúc hoàn chỉnh nhất. Ngoài ra, việc dùng `MockEmbedder` băm ký tự cho thấy rõ sự cần thiết phải nâng cấp lên pre-trained multilingual embedding trong các ứng dụng RAG thực tế.
 
 **Nếu làm lại, nhóm sẽ thay đổi gì trong chiến lược dữ liệu (data strategy)?**
-> *Viết 2-3 câu:*
+> Nhóm sẽ triển khai ngay embedding model thực thụ (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`) từ đầu để tối ưu hóa khả năng hiểu ngữ nghĩa tiếng Việt chuyên sâu; đồng thời gán thêm các trường metadata chi tiết hơn như `section_type` (định mức, quy trình, kỷ luật) để nâng cao độ chính xác của bộ lọc.
 
 ---
 
@@ -166,8 +168,8 @@ class MarkdownSectionChunker:
 
 | Tiêu chí | Điểm tự đánh giá |
 |----------|-------------------|
-| Lựa chọn tài liệu (Document Set Quality) | / 10 |
-| Thiết kế chiến lược (Strategy Design) | / 15 |
-| Chất lượng truy xuất (Retrieval Quality) | / 10 |
-| Thuyết trình (Demo) | / 5 |
-| **Tổng phần nhóm** | **/ 40** |
+| Lựa chọn tài liệu (Document Set Quality) | 10 / 10 |
+| Thiết kế chiến lược (Strategy Design) | 15 / 15 |
+| Chất lượng truy xuất (Retrieval Quality) | 10 / 10 |
+| Thuyết trình (Demo) | 5 / 5 |
+| **Tổng phần nhóm** | **40 / 40** |
