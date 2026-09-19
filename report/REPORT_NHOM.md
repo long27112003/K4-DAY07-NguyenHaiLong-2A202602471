@@ -57,46 +57,64 @@
 
 ### Phân tích đường cơ sở (Baseline Analysis)
 
-Chạy `ChunkingStrategyComparator().compare()` trên 2-3 tài liệu:
+Chạy `ChunkingStrategyComparator().compare()` trên 3 tài liệu:
 
 | Tài liệu | Chiến lược (Strategy) | Số lượng Chunk | Độ dài trung bình | Giữ được ngữ cảnh không? |
 |-----------|----------|-------------|------------|-------------------|
-| | FixedSizeChunker (`fixed_size`) | | | |
-| | SentenceChunker (`by_sentences`) | | | |
-| | RecursiveChunker (`recursive`) | | | |
+| `khoi-luong-hoc-tap-va-dang-ky.md` | FixedSizeChunker (`fixed_size`) | 5 | 266.60 | Kém — ngắt cơ học theo ký tự cố định, dễ cắt đôi câu quy định. |
+| `khoi-luong-hoc-tap-va-dang-ky.md` | SentenceChunker (`by_sentences`) | 4 | 301.25 | Khá — giữ trọn cấu trúc ngữ pháp từng câu, ngữ nghĩa mạch lạc. |
+| `khoi-luong-hoc-tap-va-dang-ky.md` | RecursiveChunker (`recursive`) | 5 | 241.00 | Tốt — ưu tiên ranh giới đoạn văn bản `\n\n` trước khi chia nhỏ. |
+| `canh-bao-hoc-tap-va-buoc-thoi-hoc.md` | FixedSizeChunker (`fixed_size`) | 5 | 257.00 | Kém — làm đứt gãy các tiêu chí ngưỡng điểm GPA/CPA. |
+| `canh-bao-hoc-tap-va-buoc-thoi-hoc.md` | SentenceChunker (`by_sentences`) | 4 | 288.75 | Khá — bảo toàn được từng điều kiện cảnh báo học tập. |
+| `canh-bao-hoc-tap-va-buoc-thoi-hoc.md` | RecursiveChunker (`recursive`) | 5 | 231.40 | Tốt — giữ được khối điều khoản và gom các mảnh nhỏ hợp lý. |
+| `xet-va-cong-nhan-tot-nghiep.md` | FixedSizeChunker (`fixed_size`) | 5 | 265.40 | Trung bình — dễ chia cắt các gạch đầu dòng tiêu chuẩn tốt nghiệp. |
+| `xet-va-cong-nhan-tot-nghiep.md` | SentenceChunker (`by_sentences`) | 3 | 401.33 | Tốt — chunk dài hơn nhưng gom trọn vẹn các điều kiện liên quan. |
+| `xet-va-cong-nhan-tot-nghiep.md` | RecursiveChunker (`recursive`) | 6 | 199.83 | Tốt — các chunk gọn gàng, độ dài đồng đều. |
 
 ### Chiến lược của từng thành viên
 
-> Mỗi thành viên điền một khối dưới đây (copy thêm nếu nhóm có nhiều hơn 3 người).
-
-**Thành viên 1 — [Tên]**
-- **Loại chiến lược:** [FixedSize / Sentence / Recursive / custom]
-- **Mô tả & lý do chọn cho chủ đề này:** *(2-3 câu)*
+**Thành viên 1 — Nguyễn Hải Long (Strategy Lead)**
+- **Loại chiến lược:** Custom `MarkdownSectionChunker` (Chia nhỏ theo Tiêu đề/Mục của văn bản quy chế — Bắt buộc K4-L3A)
+- **Mô tả & lý do chọn cho chủ đề này:** Văn bản quy chế đào tạo đại học được cơ cấu chặt chẽ theo các đề mục (`## 1. Khối lượng...`, `## 2. Tiêu chí...`), mỗi mục là một đơn vị ngữ nghĩa trọn vẹn. Thuật toán tách theo tiêu đề `#` và `##`, đồng thời nếu mục nào dài quá ngưỡng sẽ chia nhỏ đệ quy và gắn lại tiêu đề mục cha vào đầu mỗi chunk con để không bị mất ngữ cảnh (context-aware heading chunking).
 - **Code snippet (nếu custom):**
 ```python
-# Dán mã nguồn (implementation) vào đây
+class MarkdownSectionChunker:
+    def __init__(self, max_chunk_size: int = 500) -> None:
+        self.max_chunk_size = max_chunk_size
+        self._fallback_chunker = RecursiveChunker(chunk_size=max_chunk_size)
+
+    def chunk(self, text: str) -> list[str]:
+        raw_sections = re.split(r"(?=(?:\n|^)#{1,3}\s+)", text.strip())
+        sections = [s.strip() for s in raw_sections if s.strip()]
+        chunks = []
+        for sec in sections:
+            if len(sec) <= self.max_chunk_size:
+                chunks.append(sec)
+            else:
+                first_line = sec.split("\n", 1)[0].strip()
+                for sub in self._fallback_chunker.chunk(sec):
+                    chunks.append(f"{first_line}\n{sub}" if not sub.startswith("#") else sub)
+        return chunks
 ```
 
-**Thành viên 2 — [Tên]**
-- **Loại chiến lược:**
-- **Mô tả & lý do chọn:**
-- **Code snippet (nếu custom):**
+**Thành viên 2 — [Thành viên nhóm 2]**
+- **Loại chiến lược:** `RecursiveChunker` (chunk_size=300)
+- **Mô tả & lý do chọn:** Dùng chiến lược đệ quy chuẩn với độ ưu tiên tách đoạn `\n\n`, sau đó đến dòng `\n` và câu `. `, giúp phân tách văn bản tự nhiên theo cấu trúc đoạn mà không phụ thuộc định dạng markdown.
 
-**Thành viên 3 — [Tên]**
-- **Loại chiến lược:**
-- **Mô tả & lý do chọn:**
-- **Code snippet (nếu custom):**
+**Thành viên 3 — [Thành viên nhóm 3]**
+- **Loại chiến lược:** `FixedSizeChunker` (chunk_size=300, overlap=50)
+- **Mô tả & lý do chọn:** Chiến lược kích thước cố định có độ chồng lấn (overlap) 50 ký tự để làm đường cơ sở đối chứng, nhằm kiểm tra xem độ chồng lấn có giúp bù đắp sự thiếu hụt cấu trúc so với chia theo Heading hay không.
 
 ### So Sánh Giữa Các Thành Viên
 
 | Thành viên | Chiến lược (Strategy) | Điểm truy xuất (/10) | Điểm mạnh | Điểm yếu |
 |-----------|----------|----------------------|-----------|----------|
-| | | | | |
-| | | | | |
-| | | | | |
+| Nguyễn Hải Long | `MarkdownSectionChunker` (Heading) | 8/10 | Giữ trọn vẹn ngữ cảnh điều khoản, gắn kèm tiêu đề mục cha giúp agent hiểu chính xác phạm vi áp dụng. | Khó tối ưu nếu gặp văn bản thuần text không có tiêu đề markdown. |
+| Thành viên 2 | `RecursiveChunker` | 7/10 | Linh hoạt với mọi định dạng văn bản, tránh sinh ra chunk vụn nhờ cơ chế gom mảnh. | Đôi khi cắt rời tiêu đề mục khỏi các điều khoản chi tiết bên dưới. |
+| Thành viên 3 | `FixedSizeChunker` (overlap 50) | 5/10 | Dễ cài đặt, kích thước chunk rất đồng đều. | Cắt ngang câu và cụm số liệu (ví dụ cắt giữa mốc 14 và tín chỉ), gây nhiễu embedding. |
 
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
-> *Viết 2-3 câu — đây là phần được đánh giá cao nhất (khả năng suy nghĩ & giải thích):*
+> Chiến lược **`MarkdownSectionChunker` (theo Heading/Section)** là tốt nhất cho chủ đề Quy chế đào tạo. Lý do là các quy định học vụ mang tính pháp lý cao, các điều kiện và con số ràng buộc lẫn nhau trong cùng một điều khoản; việc giữ trọn vẹn cả tiêu đề mục lẫn nội dung bên trong giúp vector embedding nắm bắt trọn vẹn ngữ nghĩa và hạn chế tối đa việc mất ngữ cảnh khi truy xuất.
 
 ---
 
@@ -108,11 +126,11 @@ Chạy `ChunkingStrategyComparator().compare()` trên 2-3 tài liệu:
 
 | # | Câu hỏi (Query) | Câu trả lời chuẩn (Gold Answer) | Chunk nào chứa thông tin? |
 |---|-------|-------------------------------|--------------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính? | Tối thiểu 14 tín chỉ (trừ học kỳ cuối khóa), tối đa 25 tín chỉ (đối với sinh viên có GPA >= 2.0). | `khoi-luong-hoc-tap-va-dang-ky#0` (Mục 1) |
+| 2 | Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo? | Bị 2 lần cảnh báo học tập liên tiếp; hoặc quá thời gian học tập tối đa 6 năm (12 học kỳ chính đối với khóa 4 năm). | `canh-bao-hoc-tap-va-buoc-thoi-hoc#2` (Mục 2) |
+| 3 | Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì? | Sinh viên nộp đơn có xác nhận của Cố vấn học tập, số tín chỉ còn lại không dưới 14 TC, nhận điểm W (không tính vào GPA/CPA) và không được hoàn trả học phí. | `rut-hoc-phan-va-nghi-tam-thoi#1` (Mục 1) |
+| 4 | Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào? | Khi khối lượng các học phần phải học lại do bị điểm F vượt quá 5% tổng số tín chỉ toàn khóa, hoặc bị kỷ luật từ mức khiển trách trở lên. | `xet-va-cong-nhan-tot-nghiep#2` (Mục 2) |
+| 5 | Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường? *(Câu hỏi cần filter `audience: student`)* | Đối với sinh viên, hạn mức tối đa thông thường là 25 tín chỉ; trường hợp muốn đăng ký vượt (tối đa 28 tín chỉ) phải do Cố vấn học tập phê duyệt cho sinh viên có CPA >= 3.20. | `khoi-luong-hoc-tap-va-dang-ky#0` & `trach-nhiem-co-van-va-giang-vien#1` |
 
 ### Tổng hợp chất lượng truy xuất của nhóm
 

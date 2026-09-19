@@ -1,0 +1,72 @@
+======================================================================
+BÁO CÁO KẾT QUẢ BENCHMARK RETRIEVAL — LAB 07 (K4-L3A)
+Chủ đề: Quy chế đào tạo đại học NEU
+Chiến lược sử dụng: section_heading
+Số file văn bản gốc: 7
+Tổng số chunks đã nạp: 40
+======================================================================
+
+Câu hỏi 1 [Tra cứu số liệu]: Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính?
+Đáp án chuẩn (Gold): Tối thiểu 14 tín chỉ, tối đa 25 tín chỉ (với GPA >= 2.0).
+Tài liệu nguồn mong đợi: khoi-luong-hoc-tap-va-dang-ky.md
+Metadata filter áp dụng: None
+Top-3 Chunks tìm được:
+  Top 1: [score=0.2169] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0)
+         Preview: # Quy định về đào tạo theo chương trình tiên tiến AEP...
+  Top 2: [score=0.2097] doc_id=thang-diem-va-danh-gia-hoc-phan (thang-diem-va-danh-gia-hoc-phan#3)
+         Preview: ## 2. Thang điểm đánh giá và quy đổi sang thang điểm 4...
+  Top 3: [score=0.1651] doc_id=trach-nhiem-co-van-va-giang-vien (trach-nhiem-co-van-va-giang-vien#2)
+         Preview: ## 1. Trách nhiệm của Cố vấn học tập (CVHT) Theo Quyết định số 368/QĐ-ĐHKTQD, giảng viên làm Cố vấn học tập có các quyền...
+----------------------------------------------------------------------
+Câu hỏi 2 [Điều kiện học vụ]: Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo?
+Đáp án chuẩn (Gold): Bị 2 lần cảnh báo học tập liên tiếp; hoặc quá thời gian tối đa 6 năm (12 học kỳ chính).
+Tài liệu nguồn mong đợi: canh-bao-hoc-tap-va-buoc-thoi-hoc.md
+Metadata filter áp dụng: None
+Top-3 Chunks tìm được:
+  Top 1: [score=0.2416] doc_id=trach-nhiem-co-van-va-giang-vien (trach-nhiem-co-van-va-giang-vien#5)
+         Preview: ## 2. Trách nhiệm của Giảng viên giảng dạy học phần - Công bố công khai đề cương chi tiết học phần, lịch trình giảng dạy...
+  Top 2: [score=0.2170] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#1)
+         Preview: ## 1. Ngôn ngữ giảng dạy và chuẩn đầu vào tiếng Anh...
+  Top 3: [score=0.2140] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#2) [TRÚNG GOLD DOC]
+         Preview: ## 1. Các tiêu chí áp dụng cảnh báo học tập - **Theo điểm trung bình học kỳ (GPA):**   - GPA đạt dưới **0.80** đối với h...
+----------------------------------------------------------------------
+Câu hỏi 3 [Quy trình học vụ]: Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì?
+Đáp án chuẩn (Gold): Nộp đơn có xác nhận của Cố vấn học tập, số tín chỉ còn lại không dưới 14 TC, nhận điểm W và không hoàn học phí.
+Tài liệu nguồn mong đợi: rut-hoc-phan-va-nghi-tam-thoi.md
+Metadata filter áp dụng: None
+Top-3 Chunks tìm được:
+  Top 1: [score=0.3394] doc_id=thang-diem-va-danh-gia-hoc-phan (thang-diem-va-danh-gia-hoc-phan#1)
+         Preview: ## 1. Cơ cấu điểm đánh giá học phần...
+  Top 2: [score=0.2855] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#4) [TRÚNG GOLD DOC]
+         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập) - **Thời hạn nghỉ:** Mỗi lần nghỉ không quá 1 năm (2 học kỳ chính); tổ...
+  Top 3: [score=0.2655] doc_id=xet-va-cong-nhan-tot-nghiep (xet-va-cong-nhan-tot-nghiep#5)
+         Preview: ## 2. Xếp hạng tốt nghiệp và hạ bậc xếp loại **Quy định hạ một bậc xếp loại tốt nghiệp:** Sinh viên có CPA xếp loại Xuất...
+----------------------------------------------------------------------
+Câu hỏi 4 [Quy định tốt nghiệp]: Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào?
+Đáp án chuẩn (Gold): Khi số tín chỉ học lại do điểm F vượt quá 5% tổng số tín chỉ, hoặc bị kỷ luật từ mức khiển trách trở lên.
+Tài liệu nguồn mong đợi: xet-va-cong-nhan-tot-nghiep.md
+Metadata filter áp dụng: None
+Top-3 Chunks tìm được:
+  Top 1: [score=0.1405] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0)
+         Preview: # Quy định về đào tạo theo chương trình tiên tiến AEP...
+  Top 2: [score=0.1185] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#3)
+         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập)  - **Điều kiện:**   - Sinh viên được điều động vào lực lượng vũ trang....
+  Top 3: [score=0.0938] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#4)
+         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập) - **Thời hạn nghỉ:** Mỗi lần nghỉ không quá 1 năm (2 học kỳ chính); tổ...
+----------------------------------------------------------------------
+Câu hỏi 5 [Phân định đối tượng (A/B Test Filter)]: Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường?
+Đáp án chuẩn (Gold): Sinh viên tự đăng ký tối đa 25 tín chỉ; muốn đăng ký vượt (tối đa 28 tín chỉ) phải do Cố vấn học tập phê duyệt cho sinh viên có CPA >= 3.20.
+Tài liệu nguồn mong đợi: khoi-luong-hoc-tap-va-dang-ky.md
+Metadata filter áp dụng: {'audience': 'student'}
+Top-3 Chunks tìm được:
+  Top 1: [score=0.3427] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#4)
+         Preview: ## 2. Điều kiện duy trì học tập trong chương trình tiên tiến - Chuẩn đầu ra tốt nghiệp tiếng Anh của sinh viên chương tr...
+  Top 2: [score=0.2446] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#3)
+         Preview: ## 1. Các tiêu chí áp dụng cảnh báo học tập - **Theo số tín chỉ nợ đọng:** Tổng số tín chỉ của các học phần bị điểm F cò...
+  Top 3: [score=0.1942] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#4)
+         Preview: ## 2. Các trường hợp bị buộc thôi học  Sinh viên bị xử lý buộc thôi học nếu vi phạm một trong các điều kiện sau: - Bị **...
+  --> Đối chiếu khi KHÔNG dùng filter:
+      Top 1: [score=0.3427] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#4) [audience=student]
+      Top 2: [score=0.2446] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#3) [audience=student]
+      Top 3: [score=0.1942] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#4) [audience=student]
+----------------------------------------------------------------------
