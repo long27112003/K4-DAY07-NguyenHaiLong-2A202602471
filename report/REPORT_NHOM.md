@@ -1,7 +1,11 @@
 # Báo Cáo Nhóm — Lab 7: Embedding & Vector Store
 
-**Nhóm:** Nhóm G25
-**Thành viên:** Nguyễn Hải Long (cùng các thành viên nhóm G25)
+**Nhóm:** G25
+**Thành viên:**
+1. Nguyễn Đức Thắng (Data Lead)
+2. Nguyễn Hải Long (Strategy Lead)
+3. Ngô Tiến Dũng (Benchmark Lead)
+4. Trần Anh Quân (Report & Demo Lead)
 **Ngày:** 20/09/2026
 
 > **Nộp 1 bản / nhóm.** Phần cá nhân (hướng tiếp cận, kết quả riêng, dự đoán…) mỗi thành viên nộp riêng trong `REPORT_CANHAN.md`. Chi tiết thang điểm: `docs/SCORING.md`.
@@ -97,21 +101,26 @@ class MarkdownSectionChunker:
         return chunks
 ```
 
-**Thành viên 2 — [Thành viên nhóm 2]**
+**Thành viên 2 — Nguyễn Đức Thắng (Data Lead)**
 - **Loại chiến lược:** `RecursiveChunker` (chunk_size=300)
-- **Mô tả & lý do chọn:** Dùng chiến lược đệ quy chuẩn với độ ưu tiên tách đoạn `\n\n`, sau đó đến dòng `\n` và câu `. `, giúp phân tách văn bản tự nhiên theo cấu trúc đoạn mà không phụ thuộc định dạng markdown.
+- **Mô tả & lý do chọn:** Phụ trách thu thập và chuẩn hóa 7 tài liệu quy chế NEU. Thử nghiệm chiến lược chia đệ quy chuẩn với độ ưu tiên phân tách đoạn `\n\n`, sau đó đến dòng `\n` và câu `. `, giúp văn bản phân rã tự nhiên theo cấu trúc đoạn mà không phụ thuộc định dạng markdown.
 
-**Thành viên 3 — [Thành viên nhóm 3]**
+**Thành viên 3 — Ngô Tiến Dũng (Benchmark Lead)**
 - **Loại chiến lược:** `FixedSizeChunker` (chunk_size=300, overlap=50)
-- **Mô tả & lý do chọn:** Chiến lược kích thước cố định có độ chồng lấn (overlap) 50 ký tự để làm đường cơ sở đối chứng, nhằm kiểm tra xem độ chồng lấn có giúp bù đắp sự thiếu hụt cấu trúc so với chia theo Heading hay không.
+- **Mô tả & lý do chọn:** Phụ trách xây dựng bộ câu hỏi đánh giá và kiểm tra trích dẫn. Thử nghiệm chiến lược kích thước cố định có độ chồng lấn (overlap) 50 ký tự để làm đường cơ sở đối chứng, nhằm kiểm tra xem độ chồng lấn có giúp bù đắp sự thiếu hụt cấu trúc so với chia theo Heading hay không.
+
+**Thành viên 4 — Trần Anh Quân (Report & Demo Lead)**
+- **Loại chiến lược:** `SentenceChunker` (max_sentences_per_chunk=3)
+- **Mô tả & lý do chọn:** Phụ trách tổng hợp báo cáo và dẫn dắt phần thuyết trình. Thử nghiệm chiến lược chia theo từng câu ngữ pháp hoàn chỉnh và gom 3 câu thành 1 chunk, bảo đảm không làm gãy rụng các câu điều kiện trong quy chế đào tạo.
 
 ### So Sánh Giữa Các Thành Viên
 
-| Thành viên | Chiến lược (Strategy) | Điểm truy xuất (/10) | Điểm mạnh | Điểm yếu |
-|-----------|----------|----------------------|-----------|----------|
-| Nguyễn Hải Long | `MarkdownSectionChunker` (Heading) | 8/10 | Giữ trọn vẹn ngữ cảnh điều khoản, gắn kèm tiêu đề mục cha giúp agent hiểu chính xác phạm vi áp dụng. | Khó tối ưu nếu gặp văn bản thuần text không có tiêu đề markdown. |
-| Thành viên 2 | `RecursiveChunker` | 7/10 | Linh hoạt với mọi định dạng văn bản, tránh sinh ra chunk vụn nhờ cơ chế gom mảnh. | Đôi khi cắt rời tiêu đề mục khỏi các điều khoản chi tiết bên dưới. |
-| Thành viên 3 | `FixedSizeChunker` (overlap 50) | 5/10 | Dễ cài đặt, kích thước chunk rất đồng đều. | Cắt ngang câu và cụm số liệu (ví dụ cắt giữa mốc 14 và tín chỉ), gây nhiễu embedding. |
+| Thành viên | Vai trò | Chiến lược (Strategy) | Điểm truy xuất (/10) | Điểm mạnh | Điểm yếu |
+|-----------|---|----------|----------------------|-----------|----------|
+| Nguyễn Hải Long | Strategy Lead | `MarkdownSectionChunker` (Heading) | 8/10 | Giữ trọn vẹn ngữ cảnh điều khoản, gắn kèm tiêu đề mục cha giúp agent hiểu chính xác phạm vi áp dụng. | Khó tối ưu nếu gặp văn bản thuần text không có tiêu đề markdown. |
+| Nguyễn Đức Thắng | Data Lead | `RecursiveChunker` | 7/10 | Linh hoạt với mọi định dạng văn bản, tránh sinh ra chunk vụn nhờ cơ chế gom mảnh. | Đôi khi cắt rời tiêu đề mục khỏi các điều khoản chi tiết bên dưới. |
+| Ngô Tiến Dũng | Benchmark Lead | `FixedSizeChunker` (overlap 50) | 5/10 | Dễ cài đặt, kích thước chunk rất đồng đều. | Cắt ngang câu và cụm số liệu (ví dụ cắt giữa mốc 14 và tín chỉ), gây nhiễu embedding. |
+| Trần Anh Quân | Report & Demo Lead | `SentenceChunker` (3 câu/chunk) | 6/10 | Bảo toàn trọn vẹn cấu trúc câu ngữ pháp, không bị câu cụt. | Độ dài chunk không đồng đều giữa các đoạn ngắn và đoạn dài. |
 
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
 > Chiến lược **`MarkdownSectionChunker` (theo Heading/Section)** là tốt nhất cho chủ đề Quy chế đào tạo. Lý do là các quy định học vụ mang tính pháp lý cao, các điều kiện và con số ràng buộc lẫn nhau trong cùng một điều khoản; việc giữ trọn vẹn cả tiêu đề mục lẫn nội dung bên trong giúp vector embedding nắm bắt trọn vẹn ngữ nghĩa và hạn chế tối đa việc mất ngữ cảnh khi truy xuất.
