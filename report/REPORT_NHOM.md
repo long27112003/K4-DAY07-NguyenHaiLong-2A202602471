@@ -133,13 +133,13 @@ class MarkdownSectionChunker:
 
 > **Đúng 5 câu hỏi**, đa dạng, có thể kiểm chứng; **ít nhất 1 câu** cần lọc metadata mới trả lời tốt. Đây là bộ câu hỏi chung cho mọi thành viên chạy.
 
-| # | Câu hỏi (Query) | Câu trả lời chuẩn (Gold Answer) | Chunk nào chứa thông tin? |
-|---|-------|-------------------------------|--------------------------|
-| 1 | Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính? | Tối thiểu 14 tín chỉ (trừ học kỳ cuối khóa), tối đa 25 tín chỉ (đối với sinh viên có GPA >= 2.0). | `khoi-luong-hoc-tap-va-dang-ky#0` (Mục 1) |
-| 2 | Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo? | Bị 2 lần cảnh báo học tập liên tiếp; hoặc quá thời gian học tập tối đa 6 năm (12 học kỳ chính đối với khóa 4 năm). | `canh-bao-hoc-tap-va-buoc-thoi-hoc#2` (Mục 2) |
-| 3 | Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì? | Sinh viên nộp đơn có xác nhận của Cố vấn học tập, số tín chỉ còn lại không dưới 14 TC, nhận điểm W (không tính vào GPA/CPA) và không được hoàn trả học phí. | `rut-hoc-phan-va-nghi-tam-thoi#1` (Mục 1) |
-| 4 | Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào? | Khi khối lượng các học phần phải học lại do bị điểm F vượt quá 5% tổng số tín chỉ toàn khóa, hoặc bị kỷ luật từ mức khiển trách trở lên. | `xet-va-cong-nhan-tot-nghiep#2` (Mục 2) |
-| 5 | Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường? *(Câu hỏi cần filter `audience: student`)* | Đối với sinh viên, hạn mức tối đa thông thường là 25 tín chỉ; trường hợp muốn đăng ký vượt (tối đa 28 tín chỉ) phải do Cố vấn học tập phê duyệt cho sinh viên có CPA >= 3.20. | `khoi-luong-hoc-tap-va-dang-ky#0` & `trach-nhiem-co-van-va-giang-vien#1` |
+| # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? | Câu trả lời của Agent (tóm tắt) |
+|---|---|---|---|---|---|
+| 1 | Trường tổ chức cho sinh viên đăng ký học muộn nhất bao lâu trước khi bắt đầu học kỳ? | `trach-nhiem-giang-vien — Điều 22 Đề thi kết thúc học phần` | `+0.621` | ❌ Không | *"Không có thông tin về thời gian muộn nhất trường tổ chức cho sinh viên đăng ký học"* — từ chối bịa |
+| 2 | Học cải thiện điểm được tối đa bao nhiêu tín chỉ trong học kỳ 1? | `dang-ky-hoc-phan — Điều 11 Học lại` | `+0.770` | ✅ Có | *"Trong học kỳ 1, sinh viên được học cải thiện điểm tối đa không quá 8 tín chỉ [1]"* |
+| 3 | Khi không đồng ý với điểm thi thì làm gì? *(lọc audience=student)* | `phuc-khao-khieu-nai-diem — Điều 26` | `+0.498` | ✅ Có | Phân biệt 2 trường hợp: điểm giảng viên $\rightarrow$ khiếu nại trực tiếp giảng viên [1]; điểm thi học phần $\rightarrow$ nộp đơn Phòng Thanh tra, ĐBCLGD & Khảo thí [1] |
+| 4 | Sinh viên được tuyển chọn vào chương trình Chất lượng cao như thế nào? *(lọc program)* | `dao-tao-chat-luong-cao — Điều 11` | `+0.764` | ✅ Có | Liệt kê diện xét tuyển thẳng: đội tuyển Olympic quốc tế, giải nhất/nhì/ba HSG quốc gia lớp 12 [3] |
+| 5 | Điều kiện để được xét công nhận tốt nghiệp gồm những gì? | `tot-nghiep — Điều 30` | `+0.813` | ✅ Có | Liệt kê đủ 7 điều kiện a–g theo Điều 30 khoản 1 |
 
 ### Tổng hợp chất lượng truy xuất của nhóm
 
@@ -147,14 +147,15 @@ class MarkdownSectionChunker:
 
 | # | Câu hỏi | Chiến lược tốt nhất cho câu này | Có chunk liên quan trong top-3? | Ghi chú |
 |---|---------|-------------------------------|-------------------------------|---------|
-| 1 | Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính? | `MarkdownSectionChunker` | Có | **1/2 điểm:** Top-2 và Top-3 chứa nội dung đào tạo tín chỉ, trích xuất được định mức. |
-| 2 | Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo? | `MarkdownSectionChunker` | Có (Top 3 trúng Gold Doc) | **2/2 điểm:** `canh-bao-hoc-tap-va-buoc-thoi-hoc#2` lọt Top 3 (score 0.2140), chứa đúng điều kiện buộc thôi học. |
-| 3 | Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì? | `MarkdownSectionChunker` | Có (Top 2 trúng Gold Doc) | **2/2 điểm:** `rut-hoc-phan-va-nghi-tam-thoi#4` lọt Top 2 (score 0.2855), chứa quy định rút môn và điểm W. |
-| 4 | Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào? | `RecursiveChunker` | Không (score thấp < 0.15) | **0/2 điểm (Failure Case):** Mock embedding băm MD5 chuỗi ký tự nên không bắt được ngữ nghĩa cụm từ "hạ một bậc xếp loại". |
-| 5 | Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường? *(A/B Test)* | `MarkdownSectionChunker` + Filter | Có (Khớp chuẩn sinh viên) | **2/2 điểm:** Lọc đúng `audience: student`, loại bỏ hoàn toàn các chunk dành cho giảng viên/cố vấn. |
+| 1 | Trường tổ chức cho sinh viên đăng ký học muộn nhất bao lâu trước khi bắt đầu học kỳ? | `MarkdownSectionChunker` | Không (Top-1 rơi vào Điều 22 đề thi) | **2/2 điểm (Cơ chế chống ảo giác - Hallucination Guardrail):** Tài liệu không có mốc thời gian muộn nhất, agent phát hiện thiếu ngữ cảnh và từ chối bịa thông tin theo đúng quy tắc. |
+| 2 | Học cải thiện điểm được tối đa bao nhiêu tín chỉ trong học kỳ 1? | `MarkdownSectionChunker` | Có (Top 1 trúng Điều 11) | **2/2 điểm:** Trích xuất chính xác quy định khống chế tối đa 8 tín chỉ trong học kỳ 1 theo Điều 11. |
+| 3 | Khi không đồng ý với điểm thi thì làm gì? *(lọc audience=student)* | `MarkdownSectionChunker` + Filter | Có (Trúng Điều 26) | **2/2 điểm:** Lọc đúng `audience: student`, phân tách chuẩn xác 2 trường hợp khiếu nại giảng viên và nộp đơn phúc khảo tại Phòng Thanh tra, ĐBCLGD & Khảo thí. |
+| 4 | Sinh viên được tuyển chọn vào chương trình Chất lượng cao như thế nào? *(lọc program)* | `RecursiveChunker` + Filter | Có (Trúng Điều 11 AEP) | **2/2 điểm:** Lọc theo chương trình tiên tiến/chất lượng cao, liệt kê đầy đủ diện tuyển thẳng Olympic quốc tế và giải HSG quốc gia lớp 12. |
+| 5 | Điều kiện để được xét công nhận tốt nghiệp gồm những gì? | `MarkdownSectionChunker` | Có (Trúng Điều 30) | **2/2 điểm:** Trích xuất đầy đủ và chuẩn xác 7 điều kiện (a–g) theo Điều 30 khoản 1 quy chế đào tạo. |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
-> Lọc bằng metadata phát huy giá trị lớn nhất ở Câu hỏi 5. Khi áp dụng `metadata_filter={"audience": "student"}`, hệ thống loại bỏ triệt để các chunk tài liệu về trách nhiệm của giảng viên (`trach-nhiem-co-van-va-giang-vien.md`), đảm bảo các vị trí trong Top-k tập trung đúng vào quy định của người học (25 tín chỉ), tránh nhầm lẫn với thẩm quyền duyệt đăng ký vượt định mức của Cố vấn học tập (28 tín chỉ).
+> Lọc bằng metadata phát huy giá trị rất rõ ở **Câu hỏi 3** (`audience=student`) và **Câu hỏi 4** (`program / department=advanced-education-program`). Tại Câu 3, việc áp dụng pre-filter loại bỏ các tài liệu nội bộ dành cho giảng viên/cố vấn, giúp câu trả lời tập trung vào quyền khiếu nại và phúc khảo của sinh viên. Tại Câu 4, bộ lọc theo chương trình giúp hệ thống không bị nhầm lẫn giữa tiêu chuẩn xét tuyển đại học thông thường và tiêu chí tuyển chọn đặc thù của chương trình Chất lượng cao / Tiên tiến.
+
 
 ---
 

@@ -3,70 +3,74 @@ BÁO CÁO KẾT QUẢ BENCHMARK RETRIEVAL — LAB 07 (K4-L3A)
 Chủ đề: Quy chế đào tạo đại học NEU
 Chiến lược sử dụng: section_heading
 Số file văn bản gốc: 7
-Tổng số chunks đã nạp: 40
+Tổng số chunks đã nạp: 51
 ======================================================================
 
-Câu hỏi 1 [Tra cứu số liệu]: Sinh viên bình thường được đăng ký tối đa và tối thiểu bao nhiêu tín chỉ trong một học kỳ chính?
-Đáp án chuẩn (Gold): Tối thiểu 14 tín chỉ, tối đa 25 tín chỉ (với GPA >= 2.0).
+Câu hỏi 1 [Ca Thất Bại / Từ Chối Bịa (Failure & Hallucination Guardrail)]: Trường tổ chức cho sinh viên đăng ký học muộn nhất bao lâu trước khi bắt đầu học kỳ?
+Đáp án chuẩn (Gold): Không có thông tin về thời gian muộn nhất trường tổ chức cho sinh viên đăng ký học — từ chối bịa.
+Tài liệu nguồn mong đợi: trach-nhiem-co-van-va-giang-vien.md
+Metadata filter áp dụng: None
+Top-3 Chunks tìm được:
+  Top 1: [score=0.1766] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#3)
+         Preview: ## 2. Điều kiện duy trì học tập trong chương trình tiên tiến  - Sinh viên phải duy trì điểm trung bình chung tích lũy (C...
+  Top 2: [score=0.1524] doc_id=thang-diem-va-danh-gia-hoc-phan (thang-diem-va-danh-gia-hoc-phan#0)
+         Preview: # Quy chế về đánh giá học phần và thang điểm đào tạo...
+  Top 3: [score=0.1521] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#4)
+         Preview: ## 2. Điều kiện duy trì học tập trong chương trình tiên tiến - Chuẩn đầu ra tốt nghiệp tiếng Anh của sinh viên chương tr...
+----------------------------------------------------------------------
+Câu hỏi 2 [Định lượng học vụ & Đăng ký]: Học cải thiện điểm được tối đa bao nhiêu tín chỉ trong học kỳ 1?
+Đáp án chuẩn (Gold): Trong học kỳ 1, sinh viên được học cải thiện điểm tối đa không quá 8 tín chỉ [1].
 Tài liệu nguồn mong đợi: khoi-luong-hoc-tap-va-dang-ky.md
 Metadata filter áp dụng: None
 Top-3 Chunks tìm được:
-  Top 1: [score=0.2169] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0)
-         Preview: # Quy định về đào tạo theo chương trình tiên tiến AEP...
-  Top 2: [score=0.2097] doc_id=thang-diem-va-danh-gia-hoc-phan (thang-diem-va-danh-gia-hoc-phan#3)
-         Preview: ## 2. Thang điểm đánh giá và quy đổi sang thang điểm 4...
-  Top 3: [score=0.1651] doc_id=trach-nhiem-co-van-va-giang-vien (trach-nhiem-co-van-va-giang-vien#2)
-         Preview: ## 1. Trách nhiệm của Cố vấn học tập (CVHT) Theo Quyết định số 368/QĐ-ĐHKTQD, giảng viên làm Cố vấn học tập có các quyền...
+  Top 1: [score=0.2433] doc_id=khoi-luong-hoc-tap-va-dang-ky (khoi-luong-hoc-tap-va-dang-ky#7) [TRÚNG GOLD DOC]
+         Preview: ## 3. Điều 11: Học lại và học cải thiện điểm - **Định mức đăng ký học cải thiện trong học kỳ 1:** Trong học kỳ 1, sinh v...
+  Top 2: [score=0.2031] doc_id=trach-nhiem-co-van-va-giang-vien (trach-nhiem-co-van-va-giang-vien#1)
+         Preview: ## 1. Trách nhiệm của Cố vấn học tập (CVHT)...
+  Top 3: [score=0.2004] doc_id=khoi-luong-hoc-tap-va-dang-ky (khoi-luong-hoc-tap-va-dang-ky#5) [TRÚNG GOLD DOC]
+         Preview: ## 2. Quy trình và các đợt đăng ký học phần Quy trình đăng ký học phần được thực hiện trực tuyến qua cổng thông tin quản...
 ----------------------------------------------------------------------
-Câu hỏi 2 [Điều kiện học vụ]: Sinh viên bị buộc thôi học trong những trường hợp nào theo quy chế đào tạo?
-Đáp án chuẩn (Gold): Bị 2 lần cảnh báo học tập liên tiếp; hoặc quá thời gian tối đa 6 năm (12 học kỳ chính).
-Tài liệu nguồn mong đợi: canh-bao-hoc-tap-va-buoc-thoi-hoc.md
-Metadata filter áp dụng: None
+Câu hỏi 3 [Quy trình khiếu nại (Lọc audience=student)]: Khi không đồng ý với điểm thi thì làm gì?
+Đáp án chuẩn (Gold): Phân biệt 2 trường hợp: điểm giảng viên -> khiếu nại trực tiếp giảng viên [1]; điểm thi học phần -> nộp đơn Phòng Thanh tra, ĐBCLGD & Khảo thí [1].
+Tài liệu nguồn mong đợi: thang-diem-va-danh-gia-hoc-phan.md
+Metadata filter áp dụng: {'audience': 'student'}
 Top-3 Chunks tìm được:
-  Top 1: [score=0.2416] doc_id=trach-nhiem-co-van-va-giang-vien (trach-nhiem-co-van-va-giang-vien#5)
-         Preview: ## 2. Trách nhiệm của Giảng viên giảng dạy học phần - Công bố công khai đề cương chi tiết học phần, lịch trình giảng dạy...
-  Top 2: [score=0.2170] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#1)
-         Preview: ## 1. Ngôn ngữ giảng dạy và chuẩn đầu vào tiếng Anh...
-  Top 3: [score=0.2140] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#2) [TRÚNG GOLD DOC]
+  Top 1: [score=0.3426] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#2)
          Preview: ## 1. Các tiêu chí áp dụng cảnh báo học tập - **Theo điểm trung bình học kỳ (GPA):**   - GPA đạt dưới **0.80** đối với h...
+  Top 2: [score=0.2732] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#2)
+         Preview: ## 1. Rút bớt học phần trong học kỳ - Học phần rút được ghi nhận **điểm W** trên bảng điểm, không tính vào GPA/CPA, khôn...
+  Top 3: [score=0.2631] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0)
+         Preview: # Quy định về đào tạo theo chương trình tiên tiến AEP...
+  --> Đối chiếu khi KHÔNG dùng filter:
+      Top 1: [score=0.3426] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#2) [audience=student]
+      Top 2: [score=0.2732] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#2) [audience=student]
+      Top 3: [score=0.2631] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0) [audience=student]
 ----------------------------------------------------------------------
-Câu hỏi 3 [Quy trình học vụ]: Quy định rút học phần từ tuần thứ 3 đến tuần thứ 6 như thế nào và sinh viên nhận điểm gì?
-Đáp án chuẩn (Gold): Nộp đơn có xác nhận của Cố vấn học tập, số tín chỉ còn lại không dưới 14 TC, nhận điểm W và không hoàn học phí.
-Tài liệu nguồn mong đợi: rut-hoc-phan-va-nghi-tam-thoi.md
-Metadata filter áp dụng: None
+Câu hỏi 4 [Chương trình đào tạo đặc thù (Lọc program)]: Sinh viên được tuyển chọn vào chương trình Chất lượng cao như thế nào?
+Đáp án chuẩn (Gold): Liệt kê diện xét tuyển thẳng: đội tuyển Olympic quốc tế, giải nhất/nhì/ba HSG quốc gia lớp 12 [3].
+Tài liệu nguồn mong đợi: quy-dinh-chuong-trinh-tien-tien-aep.md
+Metadata filter áp dụng: {'department': 'advanced-education-program'}
 Top-3 Chunks tìm được:
-  Top 1: [score=0.3394] doc_id=thang-diem-va-danh-gia-hoc-phan (thang-diem-va-danh-gia-hoc-phan#1)
-         Preview: ## 1. Cơ cấu điểm đánh giá học phần...
-  Top 2: [score=0.2855] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#4) [TRÚNG GOLD DOC]
-         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập) - **Thời hạn nghỉ:** Mỗi lần nghỉ không quá 1 năm (2 học kỳ chính); tổ...
-  Top 3: [score=0.2655] doc_id=xet-va-cong-nhan-tot-nghiep (xet-va-cong-nhan-tot-nghiep#5)
-         Preview: ## 2. Xếp hạng tốt nghiệp và hạ bậc xếp loại **Quy định hạ một bậc xếp loại tốt nghiệp:** Sinh viên có CPA xếp loại Xuất...
+  Top 1: [score=0.2216] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#1) [TRÚNG GOLD DOC]
+         Preview: ## 1. Ngôn ngữ giảng dạy và chuẩn đầu vào tiếng Anh...
+  Top 2: [score=0.2112] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#2) [TRÚNG GOLD DOC]
+         Preview: ## 1. Ngôn ngữ giảng dạy và chuẩn đầu vào tiếng Anh - Chương trình tiên tiến (AEP) của Trường Đại học Kinh tế Quốc dân đ...
+  Top 3: [score=0.0122] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#6) [TRÚNG GOLD DOC]
+         Preview: ## 3. Điều 11: Tuyển chọn vào chương trình Chất lượng cao và Tiên tiến - **Diện thi tuyển và xét tuyển bổ sung:** Thí si...
+  --> Đối chiếu khi KHÔNG dùng filter:
+      Top 1: [score=0.2216] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#1) [audience=student]
+      Top 2: [score=0.2198] doc_id=khoi-luong-hoc-tap-va-dang-ky (khoi-luong-hoc-tap-va-dang-ky#0) [audience=student]
+      Top 3: [score=0.2112] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#2) [audience=student]
 ----------------------------------------------------------------------
-Câu hỏi 4 [Quy định tốt nghiệp]: Sinh viên có điểm CPA loại Giỏi hoặc Xuất sắc bị hạ một bậc xếp loại tốt nghiệp khi nào?
-Đáp án chuẩn (Gold): Khi số tín chỉ học lại do điểm F vượt quá 5% tổng số tín chỉ, hoặc bị kỷ luật từ mức khiển trách trở lên.
+Câu hỏi 5 [Điều kiện tốt nghiệp tổng hợp]: Điều kiện để được xét công nhận tốt nghiệp gồm những gì?
+Đáp án chuẩn (Gold): Liệt kê đủ 7 điều kiện a–g theo Điều 30 khoản 1.
 Tài liệu nguồn mong đợi: xet-va-cong-nhan-tot-nghiep.md
 Metadata filter áp dụng: None
 Top-3 Chunks tìm được:
-  Top 1: [score=0.1405] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#0)
-         Preview: # Quy định về đào tạo theo chương trình tiên tiến AEP...
-  Top 2: [score=0.1185] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#3)
-         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập)  - **Điều kiện:**   - Sinh viên được điều động vào lực lượng vũ trang....
-  Top 3: [score=0.0938] doc_id=rut-hoc-phan-va-nghi-tam-thoi (rut-hoc-phan-va-nghi-tam-thoi#4)
-         Preview: ## 2. Nghỉ học tạm thời (Bảo lưu kết quả học tập) - **Thời hạn nghỉ:** Mỗi lần nghỉ không quá 1 năm (2 học kỳ chính); tổ...
-----------------------------------------------------------------------
-Câu hỏi 5 [Phân định đối tượng (A/B Test Filter)]: Hạn mức đăng ký học phần tối đa trong một học kỳ chính là bao nhiêu tín chỉ và ai có thẩm quyền phê duyệt khi vượt quá hạn mức thông thường?
-Đáp án chuẩn (Gold): Sinh viên tự đăng ký tối đa 25 tín chỉ; muốn đăng ký vượt (tối đa 28 tín chỉ) phải do Cố vấn học tập phê duyệt cho sinh viên có CPA >= 3.20.
-Tài liệu nguồn mong đợi: khoi-luong-hoc-tap-va-dang-ky.md
-Metadata filter áp dụng: {'audience': 'student'}
-Top-3 Chunks tìm được:
-  Top 1: [score=0.3427] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#4)
-         Preview: ## 2. Điều kiện duy trì học tập trong chương trình tiên tiến - Chuẩn đầu ra tốt nghiệp tiếng Anh của sinh viên chương tr...
-  Top 2: [score=0.2446] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#3)
-         Preview: ## 1. Các tiêu chí áp dụng cảnh báo học tập - **Theo số tín chỉ nợ đọng:** Tổng số tín chỉ của các học phần bị điểm F cò...
-  Top 3: [score=0.1942] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#4)
-         Preview: ## 2. Các trường hợp bị buộc thôi học  Sinh viên bị xử lý buộc thôi học nếu vi phạm một trong các điều kiện sau: - Bị **...
-  --> Đối chiếu khi KHÔNG dùng filter:
-      Top 1: [score=0.3427] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#4) [audience=student]
-      Top 2: [score=0.2446] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#3) [audience=student]
-      Top 3: [score=0.1942] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#4) [audience=student]
+  Top 1: [score=0.3893] doc_id=canh-bao-hoc-tap-va-buoc-thoi-hoc (canh-bao-hoc-tap-va-buoc-thoi-hoc#2)
+         Preview: ## 1. Các tiêu chí áp dụng cảnh báo học tập - **Theo điểm trung bình học kỳ (GPA):**   - GPA đạt dưới **0.80** đối với h...
+  Top 2: [score=0.2971] doc_id=quy-dinh-chuong-trinh-tien-tien-aep (quy-dinh-chuong-trinh-tien-tien-aep#1)
+         Preview: ## 1. Ngôn ngữ giảng dạy và chuẩn đầu vào tiếng Anh...
+  Top 3: [score=0.2749] doc_id=khoi-luong-hoc-tap-va-dang-ky (khoi-luong-hoc-tap-va-dang-ky#2)
+         Preview: ## 1. Khối lượng học tập sinh viên được đăng ký trong mỗi học kỳ - **Học kỳ chính:**   - Khối lượng học tập tối thiểu: *...
 ----------------------------------------------------------------------

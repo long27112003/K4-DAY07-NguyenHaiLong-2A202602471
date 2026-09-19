@@ -12,14 +12,17 @@ language: vi
 
 # Quy chế về điều kiện xét và công nhận tốt nghiệp
 
-## 1. Điều kiện để được công nhận tốt nghiệp
+## 1. Điều 30: Điều kiện để được xét và công nhận tốt nghiệp
 
-Sinh viên được xét và công nhận tốt nghiệp khi đáp ứng đủ các tiêu chuẩn theo Quyết định 368/QĐ-ĐHKTQD:
-- Tích lũy đủ số học phần và số tín chỉ quy định của chương trình đào tạo (tối thiểu **130 tín chỉ**).
-- Điểm trung bình chung tích lũy (CPA) toàn khóa đạt từ **2.00** trở lên.
-- Đạt chuẩn đầu ra Ngoại ngữ (chuẩn TOEIC/IELTS) và Tin học theo quy định của ngành học.
-- Có chứng chỉ Giáo dục Quốc phòng - An ninh và hoàn thành các học phần Giáo dục Thể chất.
-- Không bị truy cứu trách nhiệm hình sự hoặc không trong thời gian bị kỷ luật đình chỉ học tập.
+Căn cứ Điều 30 khoản 1 Quy chế đào tạo đại học, sinh viên được xét và công nhận tốt nghiệp khi đáp ứng đủ 7 điều kiện (a–g) sau đây:
+- a) Cho đến thời điểm xét tốt nghiệp không bị truy cứu trách nhiệm hình sự hoặc không đang trong thời gian bị kỷ luật ở mức đình chỉ học tập.
+- b) Tích lũy đủ học phần, số tín chỉ và hoàn thành các nội dung bắt buộc khác theo yêu cầu của chương trình đào tạo.
+- c) Điểm trung bình chung tích lũy (CPA) của toàn khóa học đạt từ 2.00 trở lên.
+- d) Hoàn thành và đạt chuẩn đầu ra Ngoại ngữ theo quy định của trường và ngành đào tạo.
+- e) Hoàn thành và đạt chuẩn đầu ra Tin học theo chuẩn kỹ năng ứng dụng công nghệ thông tin.
+- f) Có chứng chỉ Giáo dục Quốc phòng - An ninh theo quy định đối với sinh viên đại học.
+- g) Hoàn thành đầy đủ các học phần Giáo dục Thể chất theo chương trình đào tạo.
+
 
 ## 2. Xếp hạng tốt nghiệp và hạ bậc xếp loại
 

@@ -22,3 +22,12 @@ language: vi
 - Sinh viên phải duy trì điểm trung bình chung tích lũy (CPA) từ **2.50 trở lên** ở mỗi năm học.
 - Sinh viên bị cảnh báo học tập hoặc có CPA dưới 2.00 trong hai học kỳ liên tiếp sẽ bị xem xét chuyển về học hệ đại học chính quy tiêu chuẩn theo ngành tương ứng.
 - Chuẩn đầu ra tốt nghiệp tiếng Anh của sinh viên chương trình tiên tiến: Tối thiểu đạt chứng chỉ **IELTS 6.5** hoặc TOEFL iBT tương đương còn thời hạn giá trị.
+
+## 3. Điều 11: Tuyển chọn vào chương trình Chất lượng cao và Tiên tiến
+
+Căn cứ Điều 11 về quy chế tuyển chọn sinh viên vào chương trình Chất lượng cao và Tiên tiến:
+- **Diện xét tuyển thẳng:**
+  - Thành viên đội tuyển quốc gia tham dự kỳ thi Olympic quốc tế.
+  - Thí sinh đoạt giải Nhất, Nhì, Ba trong kỳ thi chọn học sinh giỏi (HSG) quốc gia lớp 12 các môn Toán, Vật lý, Hóa học, Tin học, Tiếng Anh.
+- **Diện thi tuyển và xét tuyển bổ sung:** Thí sinh trúng tuyển vào trường đại học có điểm trúng tuyển đạt ngưỡng đầu vào của chương trình và có chứng chỉ tiếng Anh quốc tế hợp lệ.
+

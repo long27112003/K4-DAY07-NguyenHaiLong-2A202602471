@@ -28,3 +28,11 @@ Căn cứ Quy chế đào tạo đại học năm 2024 (ban hành kèm theo Quy�
 Quy trình đăng ký học phần được thực hiện trực tuyến qua cổng thông tin quản lý đào tạo portal:
 - **Đợt đăng ký sớm (chính thức):** Trước khi học kỳ mới bắt đầu 4 tuần. Sinh viên đăng ký các môn theo kế hoạch đào tạo chuẩn của ngành.
 - **Đợt đăng ký điều chỉnh, bổ sung:** Trong vòng 2 tuần đầu của học kỳ chính. Sinh viên được đăng ký thêm hoặc hủy học phần nếu còn chỗ trống.
+
+## 3. Điều 11: Học lại và học cải thiện điểm
+
+Căn cứ Điều 11 về quy định học lại và đăng ký học cải thiện điểm:
+- Sinh viên có học phần bị điểm D, D+, C hoặc C+ được phép đăng ký học lại để cải thiện điểm trung bình tích lũy.
+- Điểm học phần được tính theo điểm cao nhất trong các lần học.
+- **Định mức đăng ký học cải thiện trong học kỳ 1:** Trong học kỳ 1, sinh viên được học cải thiện điểm tối đa không quá **8 tín chỉ** để đảm bảo thời gian phân bổ cho các học phần bắt buộc của khóa đào tạo.
+

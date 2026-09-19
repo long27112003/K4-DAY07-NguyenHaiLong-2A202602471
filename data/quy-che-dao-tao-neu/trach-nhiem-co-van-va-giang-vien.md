@@ -26,3 +26,11 @@ Theo Quyết định số 368/QĐ-ĐHKTQD, giảng viên làm Cố vấn học t
 - Công bố công khai đề cương chi tiết học phần, lịch trình giảng dạy và cách tính điểm đánh giá học phần ngay trong buổi học đầu tiên.
 - Quản lý danh sách sinh viên tham gia lớp học và kiểm điểm chuyên cần.
 - Nhập điểm thành phần và nộp bảng điểm tổng kết về Phòng Quản lý Đào tạo trong thời hạn tối đa **10 ngày làm việc** kể từ ngày kết thúc kỳ thi học phần.
+
+## 3. Điều 22: Đề thi kết thúc học phần và trách nhiệm ra đề thi
+
+Căn cứ Điều 22 về công tác ra đề thi và tổ chức thi kết thúc học phần:
+- Giảng viên phụ trách học phần chịu trách nhiệm biên soạn ngân hàng câu hỏi đề thi hoặc đề thi kết thúc học phần theo đúng chuẩn đầu ra đã công bố trong đề cương chi tiết.
+- Đề thi phải được Trưởng bộ môn duyệt và nộp cho bộ phận khảo thí bảo mật trước ngày thi tối thiểu 05 ngày làm việc.
+- Trách nhiệm bảo mật đề thi và đáp án biểu điểm thuộc về giảng viên ra đề và cán bộ quản lý đề thi.
+

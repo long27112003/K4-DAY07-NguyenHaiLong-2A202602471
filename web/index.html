@@ -1,385 +1,160 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stratify AI — Trợ lý Quy chế Đào tạo Đại học NEU | VinUni AI in Action</title>
-  <meta name="description" content="Giao diện Stratify AI Dashboard cho Trợ lý Tri thức Quy chế Đào tạo Đại học NEU, tích hợp RAG Engine, Section-based Chunking và Metadata Filtering.">
+  <title>NEU Academic Assistant — Chatbot Quy chế Đào tạo Đại học NEU</title>
+  <meta name="description" content="Trợ lý RAG tra cứu Quy chế Đào tạo Đại học NEU xây dựng trên chuẩn thiết kế shadcn-ui/chatbot-template, hỗ trợ phân đoạn Heading và bộ lọc Metadata.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="stratify-theme">
-  <!-- Background ambient glowing orbs -->
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-  <div class="ambient-glow glow-3"></div>
+<body class="bg-background text-foreground antialiased min-h-screen flex flex-col">
 
-  <div class="app-layout">
-    <!-- LEFT SIDEBAR: Navigation & System Info -->
-    <aside class="sidebar" id="appSidebar">
-      <div class="sidebar-header">
-        <div class="brand-logo">
-          <div class="logo-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
-          <div class="brand-text">
-            <span class="brand-name">Stratify<span class="brand-dot">.</span>AI</span>
-            <span class="brand-badge">NEU EduCore</span>
-          </div>
-        </div>
-      </div>
-
-      <nav class="sidebar-nav">
-        <div class="nav-section-title">CHỨC NĂNG CHÍNH</div>
-        <a href="#chat" class="nav-item active" id="navChat">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  <!-- Top Site Header (shadcn-ui style) -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="header-left">
+        <div class="brand-badge-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
           </svg>
-          <span>Trợ lý RAG AI</span>
-          <span class="nav-pill">Live</span>
-        </a>
-        <a href="#corpus" class="nav-item" id="navCorpus">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </div>
+        <div class="header-titles">
+          <span class="header-title">NEU Academic Assistant</span>
+          <span class="header-subtitle">Quy chế Đào tạo ĐH Chính quy</span>
+        </div>
+        <span class="model-badge">
+          <span class="status-indicator-dot"></span>
+          Section RAG
+        </span>
+      </div>
+
+      <div class="header-right">
+        <!-- Audience Selector Dropdown -->
+        <div class="select-wrapper">
+          <svg class="select-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
-          <span>Cơ sở Tri thức (7 Docs)</span>
-          <span class="nav-count" id="navDocsCount">7</span>
-        </a>
-        <a href="#benchmark" class="nav-item" id="navBenchmark">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="20" x2="18" y2="10"></line>
-            <line x1="12" y1="20" x2="12" y2="4"></line>
-            <line x1="6" y1="20" x2="6" y2="14"></line>
+          <select id="audienceSelect" class="audience-select" title="Bộ lọc đối tượng">
+            <option value="all">Tất cả đối tượng</option>
+            <option value="student" selected>Sinh viên (student)</option>
+            <option value="faculty">Giảng viên / CVHT (faculty)</option>
+          </select>
+        </div>
+
+        <!-- New Chat Button -->
+        <button id="btnNewChat" class="btn-ghost" title="Tạo cuộc hội thoại mới">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"></path>
           </svg>
-          <span>Benchmark & Analytics</span>
-        </a>
+          <span>New Chat</span>
+        </button>
 
-        <div class="nav-section-title">BỘ LỌC ĐỐI TƯỢNG (AUDIENCE)</div>
-        <div class="audience-quick-switch">
-          <button class="filter-chip active" data-audience="all">
-            <span class="dot-indicator"></span> Tất cả
-          </button>
-          <button class="filter-chip" data-audience="student">
-            <span class="dot-indicator student"></span> Sinh viên
-          </button>
-          <button class="filter-chip" data-audience="faculty">
-            <span class="dot-indicator faculty"></span> Giảng viên / CVHT
-          </button>
-        </div>
-      </nav>
-
-      <!-- System Status Widget -->
-      <div class="system-status-card">
-        <div class="status-top">
-          <div class="pulse-status">
-            <span class="pulse-dot"></span>
-            <span class="status-text">RAG Engine Online</span>
-          </div>
-          <span class="status-badge">K4-L3A</span>
-        </div>
-        <div class="status-stats-grid">
-          <div class="stat-box">
-            <div class="stat-number" id="widgetTotalChunks">40</div>
-            <div class="stat-label">Chunks Index</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Pass Tests (42/42)</div>
-          </div>
-        </div>
-        <div class="engine-meta">
-          <span>Chunker: <strong>MarkdownSection</strong></span>
-          <span>Store: <strong>In-Memory Store</strong></span>
-        </div>
-      </div>
-
-      <!-- User Profile Footer -->
-      <div class="sidebar-user">
-        <div class="user-avatar">
-          <span>NL</span>
-          <span class="avatar-status"></span>
-        </div>
-        <div class="user-info">
-          <div class="user-name">Nguyễn Hải Long</div>
-          <div class="user-role">Group G25 • Strategy Lead</div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- CENTER: Main Chat / Intelligence Workspace -->
-    <main class="chat-workspace">
-      <!-- Chat Workspace Header -->
-      <header class="workspace-header">
-        <div class="header-left">
-          <div class="bot-avatar-header">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-              <circle cx="12" cy="5" r="2"></circle>
-              <path d="M12 7v4"></path>
-              <line x1="8" y1="16" x2="8" y2="16"></line>
-              <line x1="16" y1="16" x2="16" y2="16"></line>
-            </svg>
-          </div>
-          <div class="header-title-group">
-            <div class="header-title-row">
-              <h1>Stratify RAG Assistant</h1>
-              <span class="tag-version">NEU 2024.1</span>
-              <span class="tag-tag" id="currentAudienceTag">Audience: Tất cả</span>
-            </div>
-            <p class="header-subtitle">Quy chế đào tạo ĐH chính quy ĐH Kinh tế Quốc dân (QĐ 368 & QĐ 1155)</p>
-          </div>
-        </div>
-        <div class="header-actions">
-          <button class="btn-secondary" id="btnRunBenchmarkDemo" title="Thực thi test benchmark mẫu">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <span>Run A/B Test</span>
-          </button>
-          <button class="btn-icon" id="btnClearChat" title="Xóa lịch sử chat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      <!-- Quick Suggestion Chips Bar -->
-      <div class="suggestions-container">
-        <span class="suggestion-label">Gợi ý câu hỏi:</span>
-        <div class="suggestions-scroll" id="suggestionsContainer">
-          <button class="suggestion-chip" data-q="Khối lượng tín chỉ tối đa và tối thiểu mà sinh viên NEU được phép đăng ký trong một học kỳ chính là bao nhiêu?">
-            📊 Tín chỉ tối đa & tối thiểu kỳ chính?
-          </button>
-          <button class="suggestion-chip" data-q="Sinh viên NEU bị buộc thôi học khi rơi vào những trường hợp cụ thể nào?">
-            ⚠️ Điều kiện bị buộc thôi học?
-          </button>
-          <button class="suggestion-chip" data-q="Quy định về việc rút bớt học phần và điểm W tại NEU như thế nào?">
-            📄 Thủ tục rút môn & Điểm W?
-          </button>
-          <button class="suggestion-chip" data-q="Khi nào sinh viên tốt nghiệp loại Xuất sắc hoặc Giỏi bị hạ một bậc xếp loại tốt nghiệp?">
-            🎓 Hạ bậc xếp loại tốt nghiệp?
-          </button>
-          <button class="suggestion-chip" data-q="Sinh viên có được đăng ký vượt quá 25 tín chỉ không và cần thẩm quyền của ai phê duyệt?" data-aud="faculty">
-            ⚖️ Thẩm quyền CVHT duyệt học vượt?
-          </button>
-        </div>
-      </div>
-
-      <!-- Messages Stream Area -->
-      <div class="messages-stream" id="messagesStream">
-        <!-- Initial Welcome Message Card -->
-        <div class="message-group bot-group">
-          <div class="message-avatar bot-avatar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-          </div>
-          <div class="message-content">
-            <div class="bubble bot-bubble">
-              <div class="bot-header-meta">
-                <span class="bot-name">Stratify AI Core</span>
-                <span class="badge-knowledge">7 Quy chế NEU đã nạp</span>
-              </div>
-              <div class="bot-text">
-                <p>Xin chào <strong>Nguyễn Hải Long</strong> và nhóm <strong>G25</strong>! Tôi là trợ lý RAG thông minh được trang bị cơ sở tri thức chính thức từ <strong>Trường Đại học Kinh tế Quốc dân (NEU)</strong> theo biến thể đồ án <strong>K4-L3A</strong>.</p>
-                <p>Hệ thống hỗ trợ:</p>
-                <ul>
-                  <li>🔍 <strong>Heading-based Section Chunking:</strong> Cắt đoạn thông minh theo tiêu đề tài liệu Markdown, bảo toàn ngữ cảnh phân cấp.</li>
-                  <li>🏷️ <strong>Metadata Filtering:</strong> Phân định rõ quyền truy xuất thông tin dành cho <code>Sinh viên</code> vs <code>Giảng viên / CVHT</code>.</li>
-                  <li>📌 <strong>Citations minh bạch:</strong> Mọi câu trả lời đều dẫn nguồn cụ thể kèm thẻ trích dẫn <code>[1]</code>, <code>[2]</code>.</li>
-                </ul>
-                <p>Hãy chọn một trong các câu hỏi gợi ý bên trên hoặc nhập trực tiếp câu hỏi của bạn!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Chat Input Bar -->
-      <div class="input-container">
-        <form class="chat-input-form" id="chatForm">
-          <div class="input-controls">
-            <!-- Audience Filter Select in Input Bar -->
-            <div class="audience-select-wrapper">
-              <select id="audienceSelect" class="audience-select" title="Lọc theo đối tượng">
-                <option value="all">👥 Tất cả đối tượng</option>
-                <option value="student">🎓 Chỉ Sinh viên (student)</option>
-                <option value="faculty">👨‍🏫 Chỉ Giảng viên (faculty)</option>
-              </select>
-            </div>
-
-            <div class="top-k-wrapper">
-              <span class="label-k">Top-K:</span>
-              <select id="topKSelect" class="topk-select" title="Số lượng chunks trích xuất">
-                <option value="3" selected>3 chunks</option>
-                <option value="5">5 chunks</option>
-                <option value="1">1 chunk</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="input-box-wrapper">
-            <textarea
-              id="queryInput"
-              class="chat-textarea"
-              placeholder="Hỏi về khối lượng tín chỉ, cảnh báo học tập, điểm W, điều kiện tốt nghiệp..."
-              rows="1"
-              required
-            ></textarea>
-
-            <button type="submit" class="btn-send" id="btnSend" title="Gửi câu hỏi (Enter)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-            </button>
-          </div>
-          <div class="input-tip">Nhấn <strong>Enter</strong> để gửi, <strong>Shift + Enter</strong> để xuống dòng. Metadata filter hỗ trợ thu hẹp phạm vi chính xác.</div>
-        </form>
-      </div>
-    </main>
-
-    <!-- RIGHT INSPECTOR PANEL: Live Corpus & RAG Insights -->
-    <aside class="inspector-panel" id="inspectorPanel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
+        <!-- Theme Toggle (Light / Dark) -->
+        <button id="btnThemeToggle" class="btn-icon" title="Chuyển đổi giao diện Sáng / Tối">
+          <svg id="themeIconSun" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <h2>Corpus & Retrieval Inspector</h2>
-        </div>
-        <button class="btn-tab-toggle" id="btnToggleCorpusView" title="Chuyển chế độ xem">
-          <span class="active" data-view="chunks">Chunks Live</span>
-          <span data-view="corpus">7 Docs</span>
+          <svg id="themeIconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
         </button>
       </div>
+    </div>
+  </header>
 
-      <!-- Live Inspection Metrics -->
-      <div class="live-metrics-strip" id="liveMetricsStrip">
-        <div class="metric-cell">
-          <div class="metric-val" id="metricTopScore">--</div>
-          <div class="metric-lbl">Top Cosine Score</div>
-        </div>
-        <div class="metric-cell">
-          <div class="metric-val" id="metricLatency">-- ms</div>
-          <div class="metric-lbl">Query Latency</div>
-        </div>
-        <div class="metric-cell">
-          <div class="metric-val" id="metricFilter">all</div>
-          <div class="metric-lbl">Active Filter</div>
-        </div>
-      </div>
+  <!-- Main Chat Workspace -->
+  <main class="chat-main-container">
+    <div class="chat-inner-wrap">
 
-      <!-- Dynamic Chunks Viewer Container -->
-      <div class="inspector-body" id="inspectorBody">
-        <!-- Chunks Live View (Default) -->
-        <div class="view-pane active" id="paneChunks">
-          <div class="pane-section-header">
-            <h3>TRÍCH XUẤT THỰC TẾ (RETRIEVED CONTEXT)</h3>
-            <span class="badge-chunks-count" id="retrievedCountBadge">0 chunks</span>
-          </div>
-
-          <div class="chunks-feed" id="chunksFeed">
-            <div class="empty-state">
-              <div class="empty-icon">🔎</div>
-              <h4>Chưa có truy vấn nào</h4>
-              <p>Gửi một câu hỏi trong ô chat để quan sát các đoạn văn bản (chunks) được Vector Store xếp hạng và nạp vào prompt của LLM.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7 Corpus Documents View -->
-        <div class="view-pane" id="paneCorpus" style="display: none;">
-          <div class="pane-section-header">
-            <h3>DANH SÁCH VĂN BẢN QUY CHẾ NEU</h3>
-            <span class="badge-chunks-count">7 Tài liệu</span>
-          </div>
-          <div class="corpus-list" id="corpusListContainer">
-            <!-- Populated via Javascript -->
-            <div class="loading-spinner">Đang nạp danh mục tài liệu...</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Benchmark Summary Panel at bottom of Inspector -->
-      <div class="benchmark-summary-footer">
-        <div class="bm-header">
-          <span class="bm-title">📊 Benchmark Snapshot (CP5/CP6)</span>
-          <span class="bm-badge">P@3: 1.00</span>
-        </div>
-        <div class="bm-row">
-          <span>Q1 (Tín chỉ max/min):</span>
-          <strong class="text-success">Rank 1 • Match</strong>
-        </div>
-        <div class="bm-row">
-          <span>Q2 (Buộc thôi học):</span>
-          <strong class="text-success">Rank 1 • Match</strong>
-        </div>
-        <div class="bm-row">
-          <span>Q3 (Rút môn & Điểm W):</span>
-          <strong class="text-success">Rank 1 • Match</strong>
-        </div>
-        <div class="bm-row">
-          <span>A/B Filter Impact:</span>
-          <strong class="text-info">100% Student Chunks</strong>
-        </div>
-      </div>
-    </aside>
-  </div>
-
-  <!-- A/B Test Modal Dialog -->
-  <div class="modal-overlay" id="abTestModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      <!-- Empty State (shadcn Empty Component) -->
+      <div id="emptyState" class="empty-state-view">
+        <div class="empty-icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
           </svg>
-          <h3>A/B Metadata Filter Experiment Demo</h3>
         </div>
-        <button class="btn-close-modal" id="btnCloseModal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-desc">
-          Thử nghiệm so sánh trực quan giữa <strong>Không dùng Filter (audience=all)</strong> và <strong>Có dùng Pre-filter (audience=student)</strong> trên câu hỏi phân quyền trong Lab 07.
+        <h2 class="empty-title">Hôm nay tôi có thể giúp gì cho bạn?</h2>
+        <p class="empty-desc">
+          Trợ lý RAG tra cứu Quy chế Đào tạo NEU. Hệ thống sử dụng kỹ thuật cắt đoạn theo đề mục (Section Chunking), phòng chống suy đoán ngoài ngữ cảnh và hỗ trợ lọc metadata.
         </p>
-        <div class="ab-grid">
-          <div class="ab-col">
-            <div class="ab-col-header filter-none">
-              <span>Phương án A: Không Filter (All)</span>
-              <span class="ab-badge">baseline</span>
-            </div>
-            <div class="ab-col-content" id="abResultA">
-              <p>Đang chạy thử nghiệm...</p>
-            </div>
-          </div>
-          <div class="ab-col">
-            <div class="ab-col-header filter-student">
-              <span>Phương án B: Pre-Filter (audience=student)</span>
-              <span class="ab-badge success">K4-L3A Variant</span>
-            </div>
-            <div class="ab-col-content" id="abResultB">
-              <p>Đang chạy thử nghiệm...</p>
-            </div>
-          </div>
+
+        <!-- Suggestions Grid (New 5 benchmark questions) -->
+        <div class="suggestions-grid" id="suggestionsGrid">
+          <button class="suggestion-card" data-q="Trường tổ chức cho sinh viên đăng ký học muộn nhất bao lâu trước khi bắt đầu học kỳ?" data-aud="all">
+            <div class="suggestion-card-title">⏱️ Hạn chót đăng ký học muộn nhất bao lâu?</div>
+            <div class="suggestion-card-sub">Kiểm tra cơ chế từ chối bịa (Failure case)</div>
+          </button>
+
+          <button class="suggestion-card" data-q="Học cải thiện điểm được tối đa bao nhiêu tín chỉ trong học kỳ 1?" data-aud="student">
+            <div class="suggestion-card-title">📈 Học cải thiện điểm tối đa bao nhiêu tín chỉ?</div>
+            <div class="suggestion-card-sub">Điều 11 Học lại & cải thiện điểm (Học kỳ 1)</div>
+          </button>
+
+          <button class="suggestion-card" data-q="Khi không đồng ý với điểm thi thì làm gì?" data-aud="student">
+            <div class="suggestion-card-title">⚖️ Khi không đồng ý với điểm thi thì làm gì?</div>
+            <div class="suggestion-card-sub">Điều 26 Phúc khảo & khiếu nại điểm thi</div>
+          </button>
+
+          <button class="suggestion-card" data-q="Sinh viên được tuyển chọn vào chương trình Chất lượng cao như thế nào?" data-aud="student">
+            <div class="suggestion-card-title">🌟 Tuyển chọn vào CT Chất lượng cao?</div>
+            <div class="suggestion-card-sub">Điều 11 Diện xét tuyển thẳng Olympic & HSG</div>
+          </button>
+
+          <button class="suggestion-card" data-q="Điều kiện để được xét công nhận tốt nghiệp gồm những gì?" data-aud="student">
+            <div class="suggestion-card-title">🎓 Điều kiện để được xét công nhận tốt nghiệp?</div>
+            <div class="suggestion-card-sub">Điều 30 khoản 1 với đầy đủ 7 điều kiện (a–g)</div>
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-secondary" id="btnCloseModalBtn">Đóng</button>
-        <button class="btn-primary" id="btnRunABAgain">Chạy lại thử nghiệm</button>
+
+      <!-- Messages Stream (MessageScroller) -->
+      <div id="messagesStream" class="messages-stream hidden"></div>
+
+    </div>
+  </main>
+
+  <!-- Bottom Prompt Form (shadcn PromptForm) -->
+  <div class="prompt-footer-fixed">
+    <div class="prompt-container">
+      <form id="chatForm" class="prompt-box">
+        <textarea
+          id="queryInput"
+          class="prompt-textarea"
+          placeholder="Hỏi về điểm thi, tín chỉ cải thiện, tốt nghiệp, CT Chất lượng cao..."
+          rows="1"
+          required
+        ></textarea>
+
+        <div class="prompt-bottom-row">
+          <div class="prompt-meta-info">
+            <span class="meta-tag" id="statusFilterTag">Audience: Sinh viên</span>
+            <span class="meta-tag">7 Docs NEU</span>
+          </div>
+
+          <button type="submit" id="btnSend" class="btn-send" title="Gửi câu hỏi (Enter)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </form>
+      <div class="prompt-tip">
+        Nhấn <strong>Enter</strong> để gửi, <strong>Shift + Enter</strong> để xuống dòng. Trợ lý RAG trích xuất từ văn bản chính thức QĐ 368/QĐ-ĐHKTQD.
       </div>
     </div>
   </div>

@@ -37,3 +37,10 @@ language: vi
 
 - **GPA (Điểm trung bình học kỳ):** Tính theo trọng số tín chỉ của các học phần sinh viên học trong học kỳ đó.
 - **CPA (Điểm trung bình tích lũy):** Tính toàn bộ các học phần đã hoàn thành từ đầu khóa, điểm cao nhất giữa các lần học sẽ được chọn làm điểm chính thức.
+
+## 4. Điều 26: Phúc khảo và khiếu nại điểm thi
+
+Khi sinh viên không đồng ý với kết quả đánh giá học phần hoặc điểm thi kết thúc học phần, quy trình khiếu nại và phúc khảo được phân định rõ theo 2 trường hợp:
+- **Trường hợp 1 (Điểm do giảng viên chấm):** Đối với điểm chuyên cần, điểm kiểm tra định kỳ hoặc bài tập quá trình, sinh viên khiếu nại trực tiếp với giảng viên giảng dạy học phần trong thời hạn 03 ngày làm việc kể từ khi công bố điểm.
+- **Trường hợp 2 (Điểm thi học phần):** Đối với bài thi kết thúc học phần, sinh viên làm đơn xin phúc khảo nộp về Phòng Thanh tra, Đảm bảo chất lượng giáo dục & Khảo thí (ĐBCLGD & Khảo thí) trong vòng 07 ngày làm việc kể từ ngày công bố điểm trên cổng portal.
+
